@@ -1,36 +1,7 @@
-$maincolor: #37517e;
-$btncolor: rgb(71, 178, 228);
-$gray: #848484;
-$lightbtn: #47b2e4;
-
-*,
-::after,
-::before {
-  box-sizing: border-box;
-}
-body {
-  font-family: "Open Sans", sans-serif;
-  color: #444444;
-}
-
-a {
-  color: #47b2e4;
-  text-decoration: none;
-}
-
-a:hover {
-  color: #73c5eb;
-  text-decoration: none;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Jost", sans-serif;
-}
+@import "var";
+@import "mixin";
+@import "util";
+@import "mobile_nav";
 
 // header
 #header {
@@ -82,7 +53,11 @@ header {
     white-space: nowrap;
     transition: 0.3s;
   }
-
+  ul {
+    @include maxmd {
+      display: none;
+    }
+  }
   ul li {
     padding: 0 10px;
     list-style: none;
@@ -150,6 +125,11 @@ header {
         display: none;
         padding-right: 15px;
 
+        @include sm {
+          top: -20%;
+          left: -90%;
+        }
+
         li a {
           color: #0c3c53;
           &:hover {
@@ -195,106 +175,11 @@ header {
     position: absolute;
     right: 10px;
     top: 10px;
+    @include maxmd {
+      display: block;
+    }
   }
 } //navbar end--------------------
-
-@media (min-width: 760px) {
-  .navbar .dropdown .dropdown ul {
-    top: -20%;
-    left: -90%;
-  }
-}
-
-// --------mobile-------------
-
-@media (max-width: 991px) {
-  .navbar .mobile-nav-toggle {
-    display: block;
-  }
-  .navbar > ul {
-    display: none;
-  }
-
-  //   .navbar-mobile {
-  //     position: fixed;
-  //     overflow: hidden;
-  //     top: 0;
-  //     right: 0;
-  //     left: 0;
-  //     bottom: 0;
-  //     background: rgba(40, 58, 90, 0.9);
-  //     transition: 0.3s;
-  //     z-index: 999;
-  //     .mobile-nav-toggle {
-  //       position: absolute;
-  //       top: 15px;
-  //       right: 15px;
-  //     }
-  //     ul {
-  //       display: block;
-  //       position: absolute;
-  //       top: 55px;
-  //       right: 15px;
-  //       bottom: 15px;
-  //       left: 15px;
-  //       padding: 10px 0;
-  //       border-radius: 10px;
-  //       background-color: #fff;
-  //       overflow-y: auto;
-  //       transition: 0.3s;
-  //     }
-  //     a,
-  //     a:focus {
-  //       padding: 10px 20px;
-  //       font-size: 15px;
-  //       color: #37517e;
-  //     }
-
-  //     .dropdown ul {
-  //       position: static;
-  //       display: none;
-  //       margin: 10px 20px;
-  //       padding: 10px 0;
-  //       z-index: 99;
-  //       visibility: visible;
-  //       background: #fff;
-  //       box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
-  //       li {
-  //         min-width: 200px;
-  //       }
-  //       a {
-  //         padding: 10px 20px;
-  //       }
-  //       i {
-  //         font-size: 12px;
-  //       }
-  //       &:active {
-  //         display: block;
-  //       }
-  //     }
-
-  //     .nav-get-start {
-  //       margin: 15px;
-  //       color: #37517e;
-  //       text-align: center;
-  //       &:hover {
-  //         color: white;
-  //       }
-  //     }
-  //   }
-  // }
-
-  // .navbar-mobile a:hover,
-  // .navbar-mobile .active,
-  // .navbar-mobile li:hover > a {
-  //   color: #47b2e4;
-  // }
-  // .navbar-mobile .dropdown ul a:hover,
-  // .navbar-mobile .dropdown ul .active:hover,
-  // .navbar-mobile .dropdown ul li:hover > a {
-  //   color: #47b2e4;
-}
-// ---------------------
 
 .img_start {
   flex-direction: column;
@@ -309,11 +194,15 @@ header {
   font-size: 16px;
   font-weight: normal;
   height: 600px;
+  // 修正： 高度設成100裝置
+  // height: 100vh;
+  @include maxsm {
+    height: 100vh;
+  }
   line-height: 24px;
   // 溢出的直接隱藏
-  overflow-x: hidden;
-  overflow-y: hidden;
-  padding: 120px 20px 60px;
+  overflow: hidden;
+  padding: 60px 0;
   max-width: 100%;
   justify-content: center;
   align-items: baseline;
@@ -407,9 +296,8 @@ header {
     padding-left: 5%;
     // flex-shrink: 1;
   }
-}
-@media (max-width: 991px) {
-  .img_start {
+
+  @include maxmd {
     height: 90vh;
     text-align: center;
     img {
@@ -427,7 +315,7 @@ header {
   text-align: center;
   background-color: #f3f5fa;
   img {
-    width: 45%;
+    width: 80%;
     align-self: center;
     filter: grayscale(1);
     &:hover {
@@ -436,10 +324,8 @@ header {
       transition-duration: 0.4s;
     }
   }
-}
-@media (max-width: 768px) {
-  .main_section img {
-    max-width: 35%;
+  @include maxsm {
+    max-width: 100%;
   }
 }
 
@@ -457,26 +343,6 @@ header {
     position: relative;
     color: $maincolor;
     justify-content: center;
-    &::before {
-      content: "";
-      position: absolute;
-      display: block;
-      width: 120px;
-      height: 1px;
-      background: #ddd;
-      bottom: 1px;
-      left: calc(50% - 60px);
-    }
-    &::after {
-      content: "";
-      position: absolute;
-      height: 3px;
-      width: 40px;
-      border-radius: 2px;
-      bottom: 0.4px;
-      left: calc(50% - 20px);
-      background-color: $lightbtn;
-    }
   }
   p {
     padding-top: 20px;
@@ -541,6 +407,10 @@ header {
     padding-left: 8%;
     padding-right: 3%;
     max-width: 100%;
+    @include md {
+      padding: 0;
+      display: none;
+    }
   }
   .whyUsCard {
     .card {
@@ -582,12 +452,6 @@ header {
       right: 0%;
       top: 0%;
     }
-  }
-}
-@media (min-width: 993px) {
-  .sectionWhyUs.row:first-child {
-    padding: 0;
-    display: none;
   }
 }
 
@@ -662,26 +526,6 @@ header {
     position: relative;
     color: $maincolor;
     justify-content: center;
-    &::before {
-      content: "";
-      position: absolute;
-      display: block;
-      width: 120px;
-      height: 1px;
-      background: #ddd;
-      bottom: 1px;
-      left: calc(50% - 60px);
-    }
-    &::after {
-      content: "";
-      position: absolute;
-      height: 3px;
-      width: 40px;
-      border-radius: 2px;
-      bottom: 0.4px;
-      left: calc(50% - 20px);
-      background-color: $lightbtn;
-    }
   }
   p {
     display: inline-flex;
@@ -736,14 +580,14 @@ header {
         font-size: 24px;
       }
     }
+    .card-body {
+      @include sm {
+        margin-bottom: 10px;
+      }
+    }
   }
 }
 // Service section end
-@media (min-width: 768px) {
-  .sectionService.row.card-body {
-    margin-bottom: 10px;
-  }
-}
 
 // Call To Action section
 .sectionCallToAction {
@@ -789,11 +633,11 @@ header {
     }
   }
 }
-@media (max-width: 1024px) {
-  .cta {
-    background-attachment: scroll;
-  }
-}
+// @media (max-width: 1024px) {
+//   .cta {
+//     background-attachment: scroll;
+//   }
+// }
 
 // section Portfolio
 .sectionPortfolio {
@@ -809,26 +653,6 @@ header {
     position: relative;
     color: $maincolor;
     justify-content: center;
-    &::before {
-      content: "";
-      position: absolute;
-      display: block;
-      width: 120px;
-      height: 1px;
-      background: #ddd;
-      bottom: 1px;
-      left: calc(50% - 60px);
-    }
-    &::after {
-      content: "";
-      position: absolute;
-      height: 3px;
-      width: 40px;
-      border-radius: 2px;
-      bottom: 0.4px;
-      left: calc(50% - 20px);
-      background-color: $lightbtn;
-    }
   }
   p {
     display: inline-flex;
@@ -864,13 +688,13 @@ header {
     }
     span {
       display: inline-block;
-      margin: 10px 5px;
+      // margin: 10px 5px;
       font-size: 15px;
       font-weight: 500;
       line-height: 1;
       color: #444444;
       transition: all 0.3s;
-      padding: 8px 20px;
+      // padding: 8px 20px;
       border-radius: 50px;
       font-family: "Poppins", sans-serif;
     }
@@ -878,6 +702,8 @@ header {
 
   .row {
     .port-img:hover {
+      // 改善圖片跑版問題
+      overflow: hidden;
       .img-bottom {
         opacity: 1;
       }
@@ -969,26 +795,6 @@ header {
     position: relative;
     color: $maincolor;
     justify-content: center;
-    &::before {
-      content: "";
-      position: absolute;
-      display: block;
-      width: 120px;
-      height: 1px;
-      background: #ddd;
-      bottom: 1px;
-      left: calc(50% - 60px);
-    }
-    &::after {
-      content: "";
-      position: absolute;
-      height: 3px;
-      width: 40px;
-      border-radius: 2px;
-      bottom: 0.4px;
-      left: calc(50% - 20px);
-      background-color: $lightbtn;
-    }
   }
   p {
     display: inline-flex;
@@ -1089,26 +895,6 @@ header {
     margin-bottom: 20px;
     padding-bottom: 20px;
     position: relative;
-    &::before {
-      content: "";
-      position: absolute;
-      display: block;
-      width: 120px;
-      height: 1px;
-      background: #ddd;
-      bottom: 1px;
-      left: calc(50% - 60px);
-    }
-    &::after {
-      content: "";
-      position: absolute;
-      height: 3px;
-      width: 40px;
-      border-radius: 2px;
-      bottom: 0.4px;
-      left: calc(50% - 20px);
-      background-color: $lightbtn;
-    }
   }
   p {
     margin-top: 0;
@@ -1195,12 +981,10 @@ header {
       color: white;
       background-color: $lightbtn;
     }
-  }
-}
-@media (max-width: 991px) {
-  .sectionPricing .card1 {
-    max-width: 80%;
-    margin: 0 auto 30px auto;
+    @include maxmd {
+      max-width: 80%;
+      margin: 0 auto 30px auto;
+    }
   }
 }
 
@@ -1213,29 +997,9 @@ header {
     font-size: 34px;
     color: $maincolor;
     font-weight: bolder;
-    margin-bottom: 1rem;
+    // margin-bottom: 1rem;
     position: relative;
-
-    &::before {
-      content: "";
-      position: absolute;
-      display: block;
-      width: 120px;
-      height: 1px;
-      background: white;
-      top: 60px;
-      left: calc(50% - 60px);
-    }
-    &::after {
-      content: "";
-      position: absolute;
-      height: 3px;
-      width: 40px;
-      border-radius: 2px;
-      top: 60px;
-      left: calc(50% - 20px);
-      background-color: $lightbtn;
-    }
+    padding-bottom: 20px;
   }
   p {
     padding-top: 20px;
@@ -1262,8 +1026,8 @@ header {
       padding-right: 40px;
       outline: none;
       span {
-        position: absolute;
-        top: auto;
+        // position: absolute;
+        // top: auto;
         padding-left: 5px;
         word-break: normal;
       }
@@ -1300,26 +1064,6 @@ header {
     margin-bottom: 20px;
     padding-bottom: 20px;
     position: relative;
-    &::before {
-      content: "";
-      position: absolute;
-      display: block;
-      width: 120px;
-      height: 1px;
-      background: #ddd;
-      bottom: 1px;
-      left: calc(50% - 60px);
-    }
-    &::after {
-      content: "";
-      position: absolute;
-      height: 3px;
-      width: 40px;
-      border-radius: 2px;
-      bottom: 0.4px;
-      left: calc(50% - 20px);
-      background-color: $lightbtn;
-    }
   }
   p {
     margin-top: 0;
